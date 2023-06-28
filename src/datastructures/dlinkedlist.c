@@ -1,11 +1,17 @@
 #include "dlinkedlist.h"
 
-d_linkedlist *dlist_init(void *data, int datasize) {
-  return dlist_createnode(data, datasize);
+d_linkedlist *dlist_init(int datasize) {
+  d_linkedlist *list = malloc(sizeof(d_linkedlist));
+  list->tail = NULL;
+  list->head = NULL;
+  list->size = 0;
+  list->datasize = datasize;
+
+  return list;
 }
 
-d_linkedlist *dlist_createnode(void *data, int datasize) {
-  d_linkedlist *node = malloc(sizeof(d_linkedlist));
+dll_node *dlist_createnode(void *data, int datasize) {
+  dll_node *node = malloc(sizeof(dll_node));
   node->data = malloc(datasize);
   memcpy(node->data, data, datasize);
   node->next = NULL;
@@ -14,33 +20,55 @@ d_linkedlist *dlist_createnode(void *data, int datasize) {
   return node;
 }
 
-d_linkedlist *dlist_addtostart(d_linkedlist *list_node, void *data,
-                               int datasize) {
-  d_linkedlist *node = dlist_createnode(data, datasize);
-  while (list_node->previous) {
-    list_node = list_node->previous;
-  }
-  node->next = list_node;
-  list_node->previous = node;
+int dlist_prepend(d_linkedlist *dll, void *data) {
+  dll_node *node = dlist_createnode(data, dll->datasize);
 
-  return node;
+  dll->head = node;
+
+  if (!dll->size)
+    dll->tail = node;
+
+  dll->size++;
+
+  return 0;
 }
 
-d_linkedlist *dlist_addtoend(d_linkedlist *list_node, void *data,
-                             int datasize) {
-  d_linkedlist *node = dlist_createnode(data, datasize);
+int dlist_append(d_linkedlist *dll, void *data) {
+  dll_node *node = dlist_createnode(data, dll->datasize);
 
-  while (list_node->next) {
-    list_node = list_node->next;
-  }
-  list_node->next = node;
-  node->previous = list_node;
+  dll->tail = node;
 
-  return node;
+  if (!dll->size)
+    dll->head = node;
+
+  dll->size++;
+
+  return 0;
 }
 
-int dlist_removenode(d_linkedlist *node) {
+int dlist_removenode(d_linkedlist *dll, int index) {
+  if (index >= dll->size) {
+    printf("Out of bounds of dll");
+
+    return -1;
+  }
+
+  // TODO: If node == head, if node == tail, if node == head && node == tail
+  dll_node *node = dll->head;
+  for (int i = 0; i < index; i++) {
+    node = node->next;
+  }
+
   free(node->data);
+
+  if (node == dll->head && node->next) {
+
+  } else if (node == dll->head && node->next == NULL) {
+
+  } else if (node->next == NULL) {
+
+  } else {
+  }
 
   node->next->previous = node->previous;
   node->previous->next = node->next;

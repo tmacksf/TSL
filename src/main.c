@@ -1,7 +1,13 @@
-#include "datastructures.h"
-#include "str.h"
+#include "datastructures/dlinkedlist.h"
+#include "datastructures/vector.h"
+#include "str/str.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+void *printint(void *i, void *b) {
+  printf("int: %d\n", *(int *)i);
+  return 0;
+}
 
 int main() {
 
@@ -17,17 +23,19 @@ int main() {
   tests t;
   t.val = 6;
   t.anotherval = 7;
-  int v = 7;
-  int j = 6;
+  int v = 6;
+  int j = 7;
   int k = 8;
-  linkedlist *start = list_createnode(&v, sizeof(v));
-  linkedlist *middle = list_addtoend(start, &j, sizeof(j));
-  linkedlist *end = list_addtoend(start, &k, sizeof(k));
+  vector *vec = vector_new(&v, sizeof(int));
+  vec->add(vec, &j);
+  vec->add(vec, &k);
+  printf("%lu, %p %p %d\n", sizeof(int), vec->data, vec->datapointer,
+         vec->size);
+  vec->remove(vec, 1);
+  printf("%lu, %p %p %d\n", sizeof(int), vec->data, vec->datapointer,
+         vec->size);
 
-  printf("Middle node: %d\n", *(int *)start->next->data);
-  list_removenode(middle, start);
-  printf("Middle node: %d\n", *(int *)start->next->data);
-  //   list_info(start);
+  vector_foreach(vec, printint, NULL);
 
   // printf("%d", *(int *)(start->next->data));
 

@@ -1,49 +1,133 @@
-#include "linkedlist.h"
+#include "LinkedList.h"
 
-linkedlist *list_init(void *data, int datasize) {
-  linkedlist *ll = malloc(sizeof(linkedlist));
+LinkedList *list_init(int datasize) {
+  LinkedList *ll = malloc(sizeof(LinkedList));
   ll->datasize = datasize;
-  ll->size = 1;
-  ll->head = list_createnode(data, datasize);
+  ll->size = 0;
+  ll->head = NULL;
+  ll->tail = NULL;
+
+  ll->append = list_append;
+  ll->prepend = list_prepend;
+  ll->at = list_at;
+  ll->remove = list_removenodeat;
 
   return ll;
 }
 
-ll_node *list_createnode(void *data, int datasize) {
-  ll_node *l = malloc(sizeof(ll_node));
+LLNode *list_createnode(void *data, int datasize) {
+  LLNode *l = malloc(sizeof(LLNode));
   l->data = malloc(datasize);
-  memcpy(l->data, data, datasize);
-  // l->data = data;
+  // memcpy(l->data, data, datasize);
+  l->data = data;
   l->next = NULL;
 
   return l;
 }
 
-void list_addtostart(linkedlist *ll, void *data) {
-  ll_node *new_node = list_createnode(data, datasize);
+LLNode *list_prepend(LinkedList *ll, void *data) {
+  LLNode *new_node = list_createnode(data, ll->datasize);
 
-  new_node->next = head;
+  new_node->next = ll->head;
+  ll->head = new_node;
+  ll->size++;
 
-  return new_node;
-}
-
-linkedlist *list_addtoend(linkedlist *head, void *data, int datasize) {
-  linkedlist *new_node = list_createnode(data, datasize);
-
-  linkedlist *node = head;
-
-  while (node->next) {
-    node = node->next;
+  if (!ll->size) {
+    ll->tail = new_node;
   }
 
-  node->next = new_node;
+  return new_node;
+}
+
+LLNode *list_append(LinkedList *ll, void *data) {
+  LLNode *new_node = list_createnode(data, ll->datasize);
+
+  ll->tail->next = new_node;
+  ll->tail = new_node;
+  ll->size++;
+
+  // TODO: find a way to reduce branching at these places
+  if (!ll->size) {
+    ll->head = new_node;
+  }
 
   return new_node;
 }
 
-int list_foreach(linkedlist *head, void (*func)(linkedlist *, void *),
-                 void *b) {
-  linkedlist *node = head;
+int list_removenode(LinkedList *ll, LLNode *node) {
+  // if its the head and there is a next node
+  if (ll->head == node && node->next) {
+    ll->head = node->next;
+    ll->size--;
+    free(node->data);
+    free(node);
+    return 0;
+  }
+  // if there is no next node and it is the head
+  else if (ll->head == node && node->next == NULL) {
+    ll->head = NULL;
+    ll->tail = NULL;
+    free(node->data);
+    free(node);
+    ll->size = 0;
+    return 0;
+  }
+  // if it is not the head and there is a next node
+  else if (ll->head != node && node->next) {
+    // find the previous one
+    LLNode *previous_node = ll->head;
+    for (int i = 0; i < ll->size; i++) {
+      if (node == previous_node->next) {
+        previous_node->next = node->next;
+        free(node->data);
+        free(node);
+        ll->size--;
+        return 0;
+      } else {
+        previous_node = previous_node->next;
+      }
+    }
+  }
+  // if its not the head and there is no next node
+  else if (ll->head != node && node->next == NULL) {
+    LLNode *previous_node = ll->head;
+    for (int i = 0; i < ll->size; i++) {
+      if (node == previous_node->next) {
+        previous_node->next = NULL;
+        ll->tail = previous_node;
+        free(node->data);
+        free(node);
+        ll->size--;
+        return 0;
+      } else {
+        previous_node = previous_node->next;
+      }
+    }
+  }
+
+  return -1;
+}
+
+int list_removenodeat(LinkedList *ll, int index) {
+  // TODO: Test
+  LLNode *noderemoving = ll->head;
+  int found = 1;
+  if (index >= ll->size) {
+#ifdef DEBUG
+    printf("out of bounds for list");
+#endif // ifdef DEBUG
+    return -1;
+  }
+
+  if (!found)
+    return -1;
+
+  int deleted = list_removenode(ll, noderemoving);
+  return deleted;
+}
+
+int list_foreach(LinkedList *ll, void (*func)(LLNode *, void *), void *b) {
+  LLNode *node = ll->head;
   while (node) {
     func(node, b);
 
@@ -53,109 +137,24 @@ int list_foreach(linkedlist *head, void (*func)(linkedlist *, void *),
   return 0;
 }
 
-int list_info(linkedlist *head) {
-
-  int node_count = 1;
-
-  linkedlist *node = head->next;
-  while (node) {
-    node_count++;
-
-    node = node->next;
-  }
-
-  printf("Node count: %d \n", node_count);
+int list_info(LinkedList *ll) {
+  printf("Node count: %d \n", ll->size);
 
   return 0;
 }
 
-linkedlist *list_removenode(linkedlist *node, linkedlist *head) {
-  // if its the head and there is a next node
-  if (head == node && node->next) {
-    linkedlist *new_head = node->next;
-    free(node->data);
-    free(node);
-    return new_head;
-  }
-  // if there is no next node and it is the head
-  else if (head == node && node->next == NULL) {
-    free(node->data);
-    free(node);
+LLNode *list_getnodeat(LinkedList *ll, int index) {
+  if (index >= ll->size) {
+#ifdef DEBUG
+    printf("Out of bounds for list");
+#endif
     return NULL;
   }
-  // if it is not the head and there is a next node
-  else if (head != node && node->next) {
-    // find the previous one
-    linkedlist *previous_node = head;
-    int flag = 1;
-    while (flag) {
-      if (node == previous_node->next) {
-        flag = 0;
-        previous_node->next = node->next;
-        free(node->data);
-        free(node);
-        return previous_node;
-      } else {
-        previous_node = previous_node->next;
-      }
-    }
-  }
-  // if its not the head and there is no next node
-  else if (head != node && node->next == NULL) {
-    linkedlist *previous_node = head;
-    int flag = 1;
-    while (flag) {
-      if (node == previous_node->next) {
-        flag = 0;
-        previous_node->next = NULL;
-        free(node->data);
-        free(node);
-        return 0;
-      } else {
-        previous_node = previous_node->next;
-      }
-    }
-  }
 
-  return NULL;
-}
-
-linkedlist *list_removenodeat(linkedlist *head, int index) {
-  // TODO: Test
-  linkedlist *noderemoving = head;
-  int found = 1;
+  LLNode *node = ll->head;
   for (int i = 0; i < index; i++) {
-    if (noderemoving->next) {
-      noderemoving = noderemoving->next;
-    } else {
-      found = 0;
-      break;
-    }
-  }
-  linkedlist *before = list_removenode(noderemoving, head);
-
-  if (!found)
-    return NULL;
-  else
-    return before;
-}
-
-linkedlist *list_getnodeat(linkedlist *head, int index) {
-  // TODO: Test
-  linkedlist *node = head;
-
-  int found = 1;
-  for (int i = 0; i < index; i++) {
-    if (node->next)
-      node = node->next;
-    else {
-      found = 0;
-      break;
-    }
+    node = node->next;
   }
 
-  if (!found)
-    return NULL;
-  else
-    return node;
+  return node;
 }
