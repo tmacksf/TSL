@@ -38,8 +38,27 @@ typedef float F32;
 typedef double F64;
 
 ////////////////////////////////
+// Compound Types
+// TODO: Don't know what to do here but like vectors
+
+////////////////////////////////
 // Constants
 // TODO: Come back to this (don't know what to add here now)
+
+////////////////////////////////
+// Symbolic Constants
+// TODO: Come back to this (days of the week and stuff)
+
+enum WeekDays {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday
+};
+enum Months { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
 
 ////////////////////////////////
 // Macros
@@ -57,5 +76,9 @@ typedef double F64;
 
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 #define max(a, b) (((a) > (b)) ? (a) : (b))
+
+////////////////////////////////
+// Errors
+// TODO: Errors
 
 #endif // BASE_H
