@@ -1,17 +1,23 @@
 #include "dlinkedlist.h"
 
-d_linkedlist *dlist_init(int datasize) {
-  d_linkedlist *list = malloc(sizeof(d_linkedlist));
+DLinkedList *dlist_init(int datasize) {
+  DLinkedList *list = malloc(sizeof(DLinkedList));
   list->tail = NULL;
   list->head = NULL;
   list->size = 0;
   list->datasize = datasize;
 
+  // function pointers
+  list->append = dlist_append;
+  list->prepend = dlist_prepend;
+  list->clear = dlist_clear;
+  list->destroy = dlist_destroy;
+
   return list;
 }
 
-dll_node *dlist_createnode(void *data, int datasize) {
-  dll_node *node = malloc(sizeof(dll_node));
+DLLNode *dlist_createnode(void *data, int datasize) {
+  DLLNode *node = malloc(sizeof(DLLNode));
   node->data = malloc(datasize);
   memcpy(node->data, data, datasize);
   node->next = NULL;
@@ -20,8 +26,8 @@ dll_node *dlist_createnode(void *data, int datasize) {
   return node;
 }
 
-int dlist_prepend(d_linkedlist *dll, void *data) {
-  dll_node *node = dlist_createnode(data, dll->datasize);
+DLLNode *dlist_prepend(DLinkedList *dll, void *data) {
+  DLLNode *node = dlist_createnode(data, dll->datasize);
 
   dll->head = node;
 
@@ -30,11 +36,11 @@ int dlist_prepend(d_linkedlist *dll, void *data) {
 
   dll->size++;
 
-  return 0;
+  return node;
 }
 
-int dlist_append(d_linkedlist *dll, void *data) {
-  dll_node *node = dlist_createnode(data, dll->datasize);
+DLLNode *dlist_append(DLinkedList *dll, void *data) {
+  DLLNode *node = dlist_createnode(data, dll->datasize);
 
   dll->tail = node;
 
@@ -43,36 +49,78 @@ int dlist_append(d_linkedlist *dll, void *data) {
 
   dll->size++;
 
-  return 0;
+  return node;
 }
 
-int dlist_removenode(d_linkedlist *dll, int index) {
-  if (index >= dll->size) {
-    printf("Out of bounds of dll");
-
+int dlist_removeNodeAt(DLinkedList *dll, int index) {
+  // out of bounds
+  if (dll->size <= index) {
+    // TODO: Errors
+    printf("Out of bounds");
     return -1;
   }
 
-  // TODO: If node == head, if node == tail, if node == head && node == tail
-  dll_node *node = dll->head;
+  DLLNode *node = dll->head;
   for (int i = 0; i < index; i++) {
     node = node->next;
   }
+  dlist_removeNode(dll, node);
 
-  free(node->data);
-
-  if (node == dll->head && node->next) {
-
-  } else if (node == dll->head && node->next == NULL) {
-
-  } else if (node->next == NULL) {
-
-  } else {
+  return 0;
+}
+int dlist_removeNode(DLinkedList *dll, DLLNode *node) {
+  // TODO: Decide if I want to check if node is in the list
+#ifdef DEBGU
+  int found = 0;
+  DLLNode *looking = head;
+  for (int i = 0; i < dll->size; i++) {
+    if (looking == node)
+      found = 1;
   }
 
-  node->next->previous = node->previous;
-  node->previous->next = node->next;
+  if (!found) {
+    prinft("Not found");
+    return -1;
+  }
+#endif
+  free(node->data);
+
+  // if the node is the head and there is a next node
+  if (node == dll->head && node->next) {
+    dll->head = node->next;
+    dll->head->previous = NULL;
+  }
+  // if this node is the only one in the list
+  else if (node == dll->head && node->next == NULL) {
+    dll->head = NULL;
+    dll->tail = NULL;
+  }
+  // if this node is not the head and is the tail
+  else if (node->next == NULL) {
+    dll->tail = node->previous;
+    node->previous->next = NULL;
+  }
+  // the node is not head/tail
+  else {
+    node->previous->next = node->next;
+    node->next->previous = node->previous;
+  }
+  dll->size--;
   free(node);
 
   return 0;
+}
+
+void dlist_clear(DLinkedList *dll) {
+  DLLNode *node = dll->head;
+  while (node->next) {
+    free(node->data);
+    DLLNode *temp = node->next;
+    free(node);
+    node = temp;
+  }
+}
+void dlist_destroy(DLinkedList *dll) {
+  dlist_clear(dll);
+  free(dll);
 }

@@ -10,12 +10,13 @@ LinkedList *list_init(int datasize) {
   ll->append = list_append;
   ll->prepend = list_prepend;
   ll->at = list_at;
-  ll->remove = list_removenodeat;
+  ll->removeAt = list_removeNodeAt;
+  ll->remove = list_removeNode;
 
   return ll;
 }
 
-LLNode *list_createnode(void *data, int datasize) {
+LLNode *list_createNode(void *data, int datasize) {
   LLNode *l = malloc(sizeof(LLNode));
   l->data = malloc(datasize);
   // memcpy(l->data, data, datasize);
@@ -26,7 +27,7 @@ LLNode *list_createnode(void *data, int datasize) {
 }
 
 LLNode *list_prepend(LinkedList *ll, void *data) {
-  LLNode *new_node = list_createnode(data, ll->datasize);
+  LLNode *new_node = list_createNode(data, ll->datasize);
 
   new_node->next = ll->head;
   ll->head = new_node;
@@ -40,7 +41,7 @@ LLNode *list_prepend(LinkedList *ll, void *data) {
 }
 
 LLNode *list_append(LinkedList *ll, void *data) {
-  LLNode *new_node = list_createnode(data, ll->datasize);
+  LLNode *new_node = list_createNode(data, ll->datasize);
 
   ll->tail->next = new_node;
   ll->tail = new_node;
@@ -54,7 +55,7 @@ LLNode *list_append(LinkedList *ll, void *data) {
   return new_node;
 }
 
-int list_removenode(LinkedList *ll, LLNode *node) {
+int list_removeNode(LinkedList *ll, LLNode *node) {
   // if its the head and there is a next node
   if (ll->head == node && node->next) {
     ll->head = node->next;
@@ -108,7 +109,7 @@ int list_removenode(LinkedList *ll, LLNode *node) {
   return -1;
 }
 
-int list_removenodeat(LinkedList *ll, int index) {
+int list_removeNodeAt(LinkedList *ll, int index) {
   // TODO: Test
   LLNode *noderemoving = ll->head;
   int found = 1;
@@ -122,11 +123,11 @@ int list_removenodeat(LinkedList *ll, int index) {
   if (!found)
     return -1;
 
-  int deleted = list_removenode(ll, noderemoving);
+  int deleted = list_removeNode(ll, noderemoving);
   return deleted;
 }
 
-int list_foreach(LinkedList *ll, void (*func)(LLNode *, void *), void *b) {
+int list_forEach(LinkedList *ll, void (*func)(LLNode *, void *), void *b) {
   LLNode *node = ll->head;
   while (node) {
     func(node, b);
@@ -143,7 +144,7 @@ int list_info(LinkedList *ll) {
   return 0;
 }
 
-LLNode *list_getnodeat(LinkedList *ll, int index) {
+LLNode *list_getNodeAt(LinkedList *ll, int index) {
   if (index >= ll->size) {
 #ifdef DEBUG
     printf("Out of bounds for list");
@@ -156,5 +157,39 @@ LLNode *list_getnodeat(LinkedList *ll, int index) {
     node = node->next;
   }
 
+  return node;
+}
+
+void list_clear(LinkedList *ll) {
+  LLNode *node = ll->head;
+  for (int i = 0; i < ll->size; i++) {
+    free(node->data);
+    LLNode *temp = node;
+    node = node->next;
+    free(temp);
+  }
+  ll->size = 0;
+  ll->head = NULL;
+  ll->tail = NULL;
+}
+
+void list_destroy(LinkedList *ll) {
+  list_clear(ll);
+  free(ll);
+}
+
+LLNode *list_at(LinkedList *ll, int index) {
+  LLNode *noderemoving = ll->head;
+  if (index >= ll->size) {
+#ifdef DEBUG
+    printf("out of bounds for list");
+#endif // ifdef DEBUG
+    return NULL;
+  }
+
+  LLNode *node = ll->head;
+  for (int i = 0; i < index; i++) {
+    node = node->next;
+  }
   return node;
 }
