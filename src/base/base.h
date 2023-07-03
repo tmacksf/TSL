@@ -41,9 +41,26 @@ typedef double F64;
 // Compound Types
 // TODO: Don't know what to do here but like vectors
 
+typedef struct TwoDimensionalVecI32 {
+  I32 x;
+  I32 y;
+} TwoDimensionalVecI32;
+
+typedef struct TwoDimensionalVecDouble {
+  F32 x;
+  F32 y;
+} TwoDimensionalVecF32;
+
+typedef struct TwoDimensionalVecF64 {
+  F64 x;
+  F64 y;
+} TwoDimensionalVecF64;
+
 ////////////////////////////////
 // Constants
 // TODO: Come back to this (don't know what to add here now)
+
+// const I16 MaxI16 = (I16)0xFFFF - (I16)1;
 
 ////////////////////////////////
 // Symbolic Constants
