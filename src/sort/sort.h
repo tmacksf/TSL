@@ -4,17 +4,17 @@
 #include "../base.h"
 #include <string.h>
 
-void swap(void *a, void *b, int size);
+void swap(void *a, void *b, U32 size);
 
-void quicksort(void *s, int count, int size,
+void quicksort(void *data, U32 count, U32 dataSize,
                int (*cmp)(const void *, const void *, void *), void *extra);
 
 void rsort(); // radixsort
 
-void bubblesort();
+void bubblesort(void *data, U32 count, U32 dataSize,
+                int (*cmp)(const void *, const void *, void *), void *extra);
 
 void msort(); // mergesort
 
 void hsort(); // heapsort
-
 #endif
