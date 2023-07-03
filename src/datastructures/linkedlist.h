@@ -1,5 +1,5 @@
-#ifndef LinkedList_H
-#define LinkedList_H
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
 
 #include "../base.h"
 #include "string.h"

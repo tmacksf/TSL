@@ -36,6 +36,7 @@ void *vector_at(vector *self, int index);
 // performs a function on every element of the vector
 void vector_foreach(vector *self, void *(*func)(void *, void *), void *b);
 
-// creates a vector
+// Bitset
+// like a vector but for true/false
 
 #endif

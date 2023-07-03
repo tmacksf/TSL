@@ -68,7 +68,6 @@ int vector_remove(vector *self, int index) {
 
 void vector_foreach(vector *self, void *(*func)(void *, void *), void *b) {
   for (int i = 0; i < self->size; i++) {
-    void *p = self->data + self->datasize * i;
     func(self->data + (self->datasize * i), b);
   }
 }

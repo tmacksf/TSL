@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "linkedlist.h"
 
 LinkedList *list_init(int datasize) {
   LinkedList *ll = malloc(sizeof(LinkedList));
@@ -111,7 +111,6 @@ int list_removeNode(LinkedList *ll, LLNode *node) {
 
 int list_removeNodeAt(LinkedList *ll, int index) {
   // TODO: Test
-  LLNode *noderemoving = ll->head;
   int found = 1;
   if (index >= ll->size) {
 #ifdef DEBUG
@@ -120,10 +119,15 @@ int list_removeNodeAt(LinkedList *ll, int index) {
     return -1;
   }
 
+  LLNode *node = ll->head;
+  for (int i = 0; i < index; i++) {
+    node = node->next;
+  }
+
   if (!found)
     return -1;
 
-  int deleted = list_removeNode(ll, noderemoving);
+  int deleted = list_removeNode(ll, node);
   return deleted;
 }
 
@@ -179,7 +183,6 @@ void list_destroy(LinkedList *ll) {
 }
 
 LLNode *list_at(LinkedList *ll, int index) {
-  LLNode *noderemoving = ll->head;
   if (index >= ll->size) {
 #ifdef DEBUG
     printf("out of bounds for list");
