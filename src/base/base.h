@@ -60,7 +60,12 @@ typedef struct TwoDimensionalVecF64 {
 // Constants
 // TODO: Come back to this (don't know what to add here now)
 
-// const I16 MaxI16 = (I16)0xFFFF - (I16)1;
+#define MaxI8 255
+#define MaxI16 65535
+#define MaxI32 0xFFFFFFFF
+#define MaxI64 0xFFFFFFFFFFFFFFFF
+
+#define MaxU8 256
 
 ////////////////////////////////
 // Symbolic Constants
@@ -80,13 +85,26 @@ enum Months { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
 ////////////////////////////////
 // Macros
 
-#define Stmt(S)                                                                \
+#define Stmt(s)                                                                \
   do {                                                                         \
     s                                                                          \
   } while (0)
 
+#define flush fflush(stdout)
+#define trace Statement(printf("%s:%d: Trace\n", FILE_NAME, __LINE__); flush;)
+#define unreachable                                                            \
+  Statement(                                                                   \
+      printf("How did we get here? In %s on line %d\n", FILE_NAME, __LINE__);  \
+      flush;)
+
+#if COMPILER_CLANG || COMPILER_GCC
+#define AssertBreak() __builtin_trap()
+#else
 #define AssertBreak() (*(int *)0 = 0)
+#endif
+
 #define Assert(c) Stmt(if (!(c)) { AssertBreak(); })
+
 // #define Assert(c) Stmt(if (!(c)) { __debugbreak(); })
 
 #define ArraySize(a) (sizeof(a) / sizeof(*(a)))
