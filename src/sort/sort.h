@@ -1,7 +1,7 @@
 #ifndef SORTING_H
 #define SORTING_H
 
-#include "../base.h"
+#include "../base/base.h"
 #include <string.h>
 
 void swap(void *a, void *b, U32 size);
