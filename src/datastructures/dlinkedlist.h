@@ -1,7 +1,7 @@
 #ifndef DLINKEDLIST_H
 #define DLINKEDLIST_H
 
-#include "../base.h"
+#include "../base/base.h"
 #include "string.h"
 
 // doubly linked list

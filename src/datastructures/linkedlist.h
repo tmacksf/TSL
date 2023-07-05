@@ -1,7 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include "../base.h"
+#include "../base/base.h"
 #include "string.h"
 
 // linked list

@@ -1,7 +1,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "../base.h"
+#include "../base/base.h"
 #include <string.h>
 
 // vector
