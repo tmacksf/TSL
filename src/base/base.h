@@ -41,20 +41,26 @@ typedef double F64;
 // Compound Types
 // TODO: Don't know what to do here but like vectors
 
-typedef struct TwoDimensionalVecI32 {
+typedef struct Vec2_I32 {
   I32 x;
   I32 y;
-} TwoDimensionalVecI32;
+} Vec2_I32;
 
-typedef struct TwoDimensionalVecDouble {
+typedef struct Vec2 {
   F32 x;
   F32 y;
-} TwoDimensionalVecF32;
+} Vec2;
 
-typedef struct TwoDimensionalVecF64 {
+typedef struct Vec2_F64 {
   F64 x;
   F64 y;
-} TwoDimensionalVecF64;
+} Vec2_F64;
+
+typedef struct Vec3 {
+  F32 x;
+  F32 y;
+  F32 z;
+} Vec3;
 
 ////////////////////////////////
 // Constants
