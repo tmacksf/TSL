@@ -5,6 +5,7 @@ vector *vector_init(int datasize) {
   vector *v = malloc(sizeof(vector));
   v->datasize = datasize;
   v->size = 0;
+  v->maxsize = 2;
   v->data = malloc(datasize * 2);
   v->datapointer = v->data;
 
