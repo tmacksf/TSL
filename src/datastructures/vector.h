@@ -20,6 +20,8 @@ typedef struct vector {
 } vector;
 
 // vector functions
+// init
+vector *vector_init(int datasize);
 // creates a new vector with given data and datasize in bytes
 vector *vector_new(const void *data, int datasize);
 // wipes vector reserving a given number of bytes

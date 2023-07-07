@@ -1,6 +1,22 @@
 #include "vector.h"
 #include <string.h>
 
+vector *vector_init(int datasize) {
+  vector *v = malloc(sizeof(vector));
+  v->datasize = datasize;
+  v->size = 0;
+  v->data = malloc(datasize * 2);
+  v->datapointer = v->data;
+
+  // function pointers
+  v->add = *vector_add;
+  v->remove = *vector_remove;
+  v->reserve = *vector_reserve;
+  v->at = *vector_at;
+
+  return v;
+}
+
 vector *vector_new(const void *data, int datasize) {
   // reserves two
   vector *v = malloc(sizeof(vector));
