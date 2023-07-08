@@ -6,24 +6,15 @@
 
 // vector
 typedef struct vector {
-  void *data;
   int datasize;
-  // type_t datatype // TODO: Type safety
   int size;
   int maxsize;
-  void *datapointer; // points to the next available write spot in the buffer;
-  // oop time
-  int (*add)(struct vector *self, void *data);
-  int (*remove)(struct vector *self, int index);
-  void (*reserve)(struct vector *self, int size);
-  void *(*at)(struct vector *self, int index);
+  void *data;
 } vector;
 
 // vector functions
-// init
+// creates a vector with the datasize of the type in bytes
 vector *vector_init(int datasize);
-// creates a new vector with given data and datasize in bytes
-vector *vector_new(const void *data, int datasize);
 // wipes vector reserving a given number of bytes
 void vector_reserve(vector *self, int size);
 // resizes a vector when it has reached max capacity by allocating a new buffer
@@ -34,7 +25,7 @@ int vector_add(vector *self, void *data);
 // removes an element from a vector
 int vector_remove(vector *self, int index);
 // gets the data at an index
-void *vector_at(vector *self, int index);
+void *vector_at(vector *self, U32 index);
 // performs a function on every element of the vector
 void vector_foreach(vector *self, void *(*func)(void *, void *), void *b);
 
