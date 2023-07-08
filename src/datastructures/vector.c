@@ -33,6 +33,7 @@ void *vector_at(vector *self, U32 index) {
 
 void vector_resize(vector *self) {
   self->data = realloc(self->data, self->datasize * self->size * 2);
+  self->maxsize = self->size * 2;
 }
 
 void vector_reserve(vector *self, int size);
