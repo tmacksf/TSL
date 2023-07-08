@@ -36,7 +36,12 @@ void vector_resize(vector *self) {
   self->maxsize = self->size * 2;
 }
 
-void vector_reserve(vector *self, int size);
+void vector_reserve(vector *self, int size) {
+  if (self->data != NULL) {
+    free(self->data);
+  }
+  self->data = malloc(size * self->datasize);
+}
 
 int vector_remove(vector *self, int index);
 
