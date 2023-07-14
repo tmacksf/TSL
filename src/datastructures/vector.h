@@ -27,6 +27,7 @@ int vector_remove(vector *self, int index);
 // gets the data at an index
 void *vector_at(vector *self, U32 index);
 // performs a function on every element of the vector
+// tf
 void vector_foreach(vector *self, void *(*func)(void *, void *), void *b);
 
 // Bitset

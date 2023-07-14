@@ -42,7 +42,3 @@ void vector_reserve(vector *self, int size) {
   }
   self->data = malloc(size * self->datasize);
 }
-
-int vector_remove(vector *self, int index);
-
-void vector_foreach(vector *self, void *(*func)(void *, void *), void *b);
