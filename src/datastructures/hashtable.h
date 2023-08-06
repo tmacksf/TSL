@@ -26,6 +26,7 @@ enum HashTableCodes {
   HT_STATUS_OK = 0,
   HASH_DOES_NOT_EXIST,
   HASH_EXISTS,
+  HASH_NOT_DELETED,
 };
 
 // Creates a hash table
@@ -44,6 +45,6 @@ Entry *ht_getEntry(HashTable *ht, const char *key);
 
 void ht_clear(HashTable *ht);
 
-void ht_delete(HashTable *ht, const char *key);
+enum HashTableCodes ht_delete(HashTable *ht, const char *key);
 
 #endif

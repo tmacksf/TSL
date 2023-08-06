@@ -10,7 +10,7 @@ HashTable *ht_init(U32 datasize) {
   ht->entries = malloc(sizeof(Entry *) * TABLE_SIZE);
   ht->capacity = TABLE_SIZE;
   ht->size = 0;
-  ht->size = datasize;
+  ht->datasize = datasize;
 
   for (int i = 0; i < TABLE_SIZE; i++) {
     ht->entries[i] = NULL;
@@ -32,16 +32,18 @@ U32 hash(const char *key) {
 }
 
 Entry *ht_individualEntry(HashTable *ht, const char *key, const void *val) {
-  Entry *e = malloc(sizeof(Entry));
+  Entry *entry = malloc(sizeof(Entry));
 
-  e->key = malloc(strlen(key));
-  e->val = malloc(ht->datasize);
+  entry->key = malloc(strlen(key));
+  entry->val = malloc(ht->datasize);
 
-  strcpy(e->key, key);
-  memcpy(e->val, val, ht->datasize);
-  e->next = NULL;
+  strcpy(entry->key, key);
+  memcpy(entry->val, val, ht->datasize);
+  entry->next = NULL;
 
-  return e;
+  printf("Val: %d, Entry val: %d\n", *(int *)val, *(int *)entry->val);
+
+  return entry;
 }
 
 enum HashTableCodes ht_add(HashTable *ht, const char *key, const void *val) {
@@ -75,16 +77,16 @@ enum HashTableCodes ht_add(HashTable *ht, const char *key, const void *val) {
 enum HashTableCodes ht_check(HashTable *ht, const char *key) {
   U32 hashed = hash(key);
 
-  Entry *e = ht->entries[hashed];
+  Entry *entry = ht->entries[hashed];
 
-  if (!e)
+  if (!entry)
     return HASH_DOES_NOT_EXIST;
 
-  while (e) {
-    if (strcmp(e->key, key) == 0)
+  while (entry) {
+    if (strcmp(entry->key, key) == 0)
       return HASH_EXISTS;
 
-    e = e->next;
+    entry = entry->next;
   }
   return HASH_DOES_NOT_EXIST;
 }
@@ -124,9 +126,8 @@ void ht_clear(HashTable *ht) {
   }
 }
 
-// TODO: Implement delete safely so there are no hanging pointers on deleting
-// one
-void ht_delete(HashTable *ht, const char *key) {
+// TODO: Implement delete safely so there are no hanging pointers on delete
+enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
   U32 hashed = hash(key);
   int found = 0;
 
@@ -139,7 +140,25 @@ void ht_delete(HashTable *ht, const char *key) {
     } else if (entry->next == NULL) {
       break;
     } else {
+      previous = entry;
       entry = entry->next;
     }
   }
+
+  if (!found) {
+    printf("No has not deleted");
+    return HASH_NOT_DELETED;
+  }
+
+  // last entry in linked list
+  Entry *next = entry->next;
+  free(entry->key);
+  free(entry->val);
+  free(entry);
+
+  if (previous && next) {
+    previous->next = next;
+  }
+
+  return HT_STATUS_OK;
 }
