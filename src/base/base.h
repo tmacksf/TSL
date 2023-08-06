@@ -100,7 +100,7 @@ enum Months { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
 #define trace Statement(printf("%s:%d: Trace\n", FILE_NAME, __LINE__); flush;)
 #define unreachable                                                            \
   Statement(                                                                   \
-      printf("How did we get here? In %s on line %d\n", FILE_NAME, __LINE__);  \
+      printf("Unreachable reached. In %s on line %d\n", FILE_NAME, __LINE__);  \
       flush;)
 
 #if COMPILER_CLANG || COMPILER_GCC
