@@ -124,6 +124,7 @@ void ht_clear(HashTable *ht) {
     Entry *entry = ht->entries[i];
     free_entries(entry);
   }
+  ht->size = 0;
 }
 
 // TODO: Implement delete safely so there are no hanging pointers on delete
@@ -159,6 +160,7 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
   if (previous && next) {
     previous->next = next;
   }
+  ht->size -= 1;
 
   return HT_STATUS_OK;
 }
