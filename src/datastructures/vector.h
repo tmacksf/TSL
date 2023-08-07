@@ -4,33 +4,33 @@
 #include "../base/base.h"
 #include <string.h>
 
-// vector
-typedef struct vector {
+// Vector
+typedef struct Vector {
   int datasize;
   int size;
   int maxsize;
   void *data;
-} vector;
+} Vector;
 
-// vector functions
-// creates a vector with the datasize of the type in bytes
-vector *vector_init(int datasize);
-// wipes vector reserving a given number of bytes
-void vector_reserve(vector *self, int size);
-// resizes a vector when it has reached max capacity by allocating a new buffer
+// Vector functions
+// creates a Vector with the datasize of the type in bytes
+Vector *vector_init(int datasize);
+// wipes Vector reserving a given number of bytes
+void vector_reserve(Vector *self, int size);
+// resizes a Vector when it has reached max capacity by allocating a new buffer
 // the copying memory and freeing old memory
-void vector_resize(vector *self);
-// adds an element to the vector
-int vector_add(vector *self, void *data);
-// removes an element from a vector
-int vector_remove(vector *self, int index);
+void vector_resize(Vector *self);
+// adds an element to the Vector
+int vector_add(Vector *self, void *data);
+// removes an element from a Vector
+int vector_remove(Vector *self, int index);
 // gets the data at an index
-void *vector_at(vector *self, U32 index);
-// performs a function on every element of the vector
+void *vector_at(Vector *self, U32 index);
+// performs a function on every element of the Vector
 // tf
-void vector_foreach(vector *self, void *(*func)(void *, void *), void *b);
+void vector_foreach(Vector *self, void *(*func)(void *, void *), void *b);
 
 // Bitset
-// like a vector but for true/false
+// like a Vector but for true/false
 
 #endif

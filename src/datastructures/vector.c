@@ -1,11 +1,7 @@
 #include "vector.h"
-#include <malloc/_malloc.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/wait.h>
 
-vector *vector_init(int datasize) {
-  vector *v = malloc(sizeof(vector));
+Vector *vector_init(int datasize) {
+  Vector *v = malloc(sizeof(Vector));
 
   v->datasize = datasize;
   v->size = 0;
@@ -15,7 +11,7 @@ vector *vector_init(int datasize) {
   return v;
 }
 
-int vector_add(vector *self, void *data) {
+int vector_add(Vector *self, void *data) {
   // if limit has been reached, resize
   if (self->size == self->maxsize) {
     vector_resize(self);
@@ -27,16 +23,16 @@ int vector_add(vector *self, void *data) {
   return 0;
 }
 
-void *vector_at(vector *self, U32 index) {
+void *vector_at(Vector *self, U32 index) {
   return self->data + index * self->datasize;
 }
 
-void vector_resize(vector *self) {
+void vector_resize(Vector *self) {
   self->data = realloc(self->data, self->datasize * self->size * 2);
   self->maxsize = self->size * 2;
 }
 
-void vector_reserve(vector *self, int size) {
+void vector_reserve(Vector *self, int size) {
   if (self->data != NULL) {
     free(self->data);
   }
