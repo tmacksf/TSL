@@ -1,4 +1,5 @@
 #include "hashtable.h"
+#include "vector.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -40,8 +41,6 @@ Entry *ht_individualEntry(HashTable *ht, const char *key, const void *val) {
   strcpy(entry->key, key);
   memcpy(entry->val, val, ht->datasize);
   entry->next = NULL;
-
-  printf("Val: %d, Entry val: %d\n", *(int *)val, *(int *)entry->val);
 
   return entry;
 }
@@ -163,4 +162,21 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
   ht->size -= 1;
 
   return HT_STATUS_OK;
+}
+
+Vector *getKeys(HashTable *ht) {
+  Vector *vector = vector_init(sizeof(char) * 64);
+
+  for (int i = 0; i < TABLE_SIZE; i++) {
+    if (ht->entries[i] == NULL)
+      continue;
+    vector_add(vector, ht->entries[i]->key);
+    Entry *next = ht->entries[i]->next;
+    while (next) {
+      vector_add(vector, next->key);
+      next = next->next;
+    }
+  }
+
+  return vector;
 }
