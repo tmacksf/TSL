@@ -71,6 +71,6 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key);
 // Gets the keys of a hash table
 // Params: hash table (self)
 // Returns: vector of keys
-Vector *getKeys(HashTable *ht);
+Vector *ht_getKeys(HashTable *ht);
 
 #endif

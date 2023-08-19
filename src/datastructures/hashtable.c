@@ -164,7 +164,7 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
   return HT_STATUS_OK;
 }
 
-Vector *getKeys(HashTable *ht) {
+Vector *ht_getKeys(HashTable *ht) {
   Vector *vector = vector_init(sizeof(char) * 64);
 
   for (int i = 0; i < TABLE_SIZE; i++) {
