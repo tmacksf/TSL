@@ -38,3 +38,8 @@ void vector_reserve(Vector *self, int size) {
   }
   self->data = malloc(size * self->datasize);
 }
+
+void vector_delete(Vector *self) {
+  free(self->data);
+  free(self);
+}

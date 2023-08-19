@@ -30,6 +30,8 @@ void *vector_at(Vector *self, U32 index);
 // tf
 void vector_foreach(Vector *self, void *(*func)(void *, void *), void *b);
 
+void vector_delete(Vector *self);
+
 // Bitset
 // like a Vector but for true/false
 
