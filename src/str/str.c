@@ -1,7 +1,7 @@
 #include "str.h"
 
 string new_string(char *input) {
-  // get string length
+  /* get string length */
   unsigned long i = 0;
   while (input[i] != NULLCHAR) {
     i++;
@@ -26,7 +26,7 @@ string concat(string *s1, string *s2) {
   string str;
   str.size = s1->size + s2->size;
 
-  // char is size of 1 so no need to multiply by sizeof(char)
+  /* char is size of 1 so no need to multiply by sizeof(char) */
   str.str = malloc(str.size);
   char *temp = str.str;
   int i;

@@ -3,7 +3,8 @@
 
 #include "../base/base.h"
 
-// Stack allocated arena
+// TODO: Make this actually do stuff
+
 typedef struct Arena {
   char *data;
   U64 size;
@@ -11,6 +12,7 @@ typedef struct Arena {
 } Arena;
 
 #define arena_reset(a) (a)->size = 0;
+
 void *arena_alloc(Arena *a, U64 size);
 
 #endif
