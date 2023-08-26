@@ -24,7 +24,7 @@
 #endif
 
 ////////////////////////////////
-// Types
+/* Types */
 #include <stdint.h>
 typedef int8_t I8;
 typedef int16_t I16;
@@ -38,8 +38,8 @@ typedef float F32;
 typedef double F64;
 
 ////////////////////////////////
-// Compound Types
-// TODO: Don't know what to do here but like vectors
+/* Compound Types */
+/* TODO: Don't know what to do here but like vectors */
 
 typedef struct Vec2_I32 {
   I32 x;
@@ -63,8 +63,8 @@ typedef struct Vec3 {
 } Vec3;
 
 ////////////////////////////////
-// Constants
-// TODO: Come back to this (don't know what to add here now)
+/* Constants */
+/* TODO: Come back to this (don't know what to add here now) */
 
 #define MaxI8 255
 #define MaxI16 65535
@@ -74,8 +74,8 @@ typedef struct Vec3 {
 #define MaxU8 256
 
 ////////////////////////////////
-// Symbolic Constants
-// TODO: Come back to this (days of the week and stuff)
+/* Symbolic Constants */
+/* TODO: Come back to this (days of the week and stuff) */
 
 enum WeekDays {
   Sunday,
@@ -89,7 +89,7 @@ enum WeekDays {
 enum Months { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
 
 ////////////////////////////////
-// Macros
+/* Macros */
 
 #define Stmt(s)                                                                \
   do {                                                                         \
@@ -97,8 +97,8 @@ enum Months { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
   } while (0)
 
 #define flush fflush(stdout)
-#define trace Statement(printf("%s:%d: Trace\n", FILE_NAME, __LINE__); flush;)
-#define unreachable                                                            \
+#define TRACE Statement(printf("%s:%d: Trace\n", FILE_NAME, __LINE__); flush;)
+#define UNREACHABLE                                                            \
   Statement(                                                                   \
       printf("Unreachable reached. In %s on line %d\n", FILE_NAME, __LINE__);  \
       flush;)
@@ -119,7 +119,7 @@ enum Months { Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec };
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
 ////////////////////////////////
-// Errors
+/* Errors */
 // TODO: Errors
 
 #endif // BASE_H
