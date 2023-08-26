@@ -4,7 +4,7 @@
 #include "../base/base.h"
 #include <string.h>
 
-#define MAX_DATA_SIZE 10000 /* Max data size */
+#define MAX_DATA_SIZE 1000 /* Max data size */
 
 void swap(void *a, void *b, U32 size);
 
