@@ -7,12 +7,6 @@ DLinkedList *dlist_init(int datasize) {
   list->size = 0;
   list->datasize = datasize;
 
-  // function pointers
-  list->append = dlist_append;
-  list->prepend = dlist_prepend;
-  list->clear = dlist_clear;
-  list->destroy = dlist_destroy;
-
   return list;
 }
 
@@ -70,7 +64,7 @@ int dlist_removeNodeAt(DLinkedList *dll, int index) {
 }
 int dlist_removeNode(DLinkedList *dll, DLLNode *node) {
   // TODO: Decide if I want to check if node is in the list
-#ifdef DEBGU
+#ifdef DEBUG
   int found = 0;
   DLLNode *looking = head;
   for (int i = 0; i < dll->size; i++) {

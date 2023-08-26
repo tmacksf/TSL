@@ -7,12 +7,6 @@ LinkedList *list_init(int datasize) {
   ll->head = NULL;
   ll->tail = NULL;
 
-  ll->append = list_append;
-  ll->prepend = list_prepend;
-  ll->at = list_at;
-  ll->removeAt = list_removeNodeAt;
-  ll->remove = list_removeNode;
-
   return ll;
 }
 

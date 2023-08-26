@@ -1,7 +1,4 @@
 #include "hashtable.h"
-#include "vector.h"
-#include <stdlib.h>
-#include <string.h>
 
 HashTable *ht_init(U32 datasize) {
   // allocate hash table

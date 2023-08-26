@@ -2,12 +2,12 @@
 #define HASHTABLE_H
 
 #include "../base/base.h"
-#include "string.h"
 #include "vector.h"
+#include <string.h>
 
-// A hash table implementation which uses a string key and anything for the
-// value
-
+/* A hash table implementation which uses a string key and anything for the
+ * value
+ */
 #define TABLE_SIZE 100000
 
 typedef struct Entry {
@@ -17,7 +17,7 @@ typedef struct Entry {
 } Entry;
 
 typedef struct HashTable {
-  Entry **entries; // array of pointers to enteies
+  Entry **entries; /* array of pointers to enteies */
   U32 datasize;
   U32 size;
   U32 capacity;
@@ -30,47 +30,55 @@ enum HashTableCodes {
   HASH_NOT_DELETED,
 };
 
-// Creates a hash table
-// Params: datasize
-// Returns: Hash table pointer
+/* Creates a hash table
+ * Params: datasize
+ * Returns: Hash table pointer
+ */
 HashTable *ht_init(U32 datasize);
 
-// hash function
+/* hash function */
 U32 hash(const char *key);
 
-// Creates an individual entry
-// Params: hash table (self), key, value
-// Returns: entry
+/* Creates an individual entry
+ * Params: hash table, key, value
+ * Returns: entry
+ */
 Entry *ht_individualEntry(HashTable *ht, const char *key, const void *val);
 
-// Adds an entry to a hash table
-// Params: hash table (self), key, value
-// Returns: status code
+/* Adds an entry to a hash table
+ * Params: hash table, key, value
+ * Returns: status code
+ */
 enum HashTableCodes ht_add(HashTable *ht, const char *key, const void *val);
 
-// Checks if a key is in the hash table
-// Params: hash table (self), key
-// Returns: status code
+/* Checks if a key is in the hash table
+ * Params: hash table, key
+ * Returns: status code
+ */
 enum HashTableCodes ht_check(HashTable *ht, const char *key);
 
-// Gets a hash table entry
-// Params: hash table (self), key
-// Returns hash table entry
+/* Gets a hash table entry
+ * Params: hash table, key
+ * Returns hash table entry
+ */
 Entry *ht_getEntry(HashTable *ht, const char *key);
 
-// Clears a hash tbale
-// Params: hash table (self)
-// Returns: void
+/* Clears a hash tbale
+ * Params: hash table
+ * Returns: void
+ */
 void ht_clear(HashTable *ht);
 
-// Deletes an entry
-// Params: hash table (self), key
-// Returns: status code
+/* Deletes an entry
+ * Params: hash table, key
+ * Returns: status code
+ */
 enum HashTableCodes ht_delete(HashTable *ht, const char *key);
 
-// Gets the keys of a hash table
-// Params: hash table (self)
-// Returns: vector of keys
+/*Gets the keys of a hash table
+ * Params: hash table
+ * Returns: vector of keys
+ */
 Vector *ht_getKeys(HashTable *ht);
 
 #endif

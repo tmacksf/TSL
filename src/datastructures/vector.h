@@ -4,7 +4,7 @@
 #include "../base/base.h"
 #include <string.h>
 
-// Vector
+/* Vector */
 typedef struct Vector {
   int datasize;
   int size;
@@ -12,27 +12,23 @@ typedef struct Vector {
   void *data;
 } Vector;
 
-// Vector functions
-// creates a Vector with the datasize of the type in bytes
+/* Vector functions */
+/* creates a Vector with the datasize of the type in bytes */
 Vector *vector_init(int datasize);
-// wipes Vector reserving a given number of bytes
+/* wipes Vector reserving a given number of bytes */
 void vector_reserve(Vector *self, int size);
-// resizes a Vector when it has reached max capacity by allocating a new buffer
-// the copying memory and freeing old memory
+/* resizes a Vector when it has reached max capacity by allocating a new buffer
+ * the copying memory and freeing old memory */
 void vector_resize(Vector *self);
-// adds an element to the Vector
+/* adds an element to the Vector */
 int vector_add(Vector *self, void *data);
-// removes an element from a Vector
+/* removes an element from a Vector */
 int vector_remove(Vector *self, int index);
-// gets the data at an index
+/* gets the data at an index */
 void *vector_at(Vector *self, U32 index);
-// performs a function on every element of the Vector
-// tf
+/* performs a function on every element of the Vector */
 void vector_foreach(Vector *self, void *(*func)(void *, void *), void *b);
-
+/* Delets a vector */
 void vector_delete(Vector *self);
-
-// Bitset
-// like a Vector but for true/false
 
 #endif
