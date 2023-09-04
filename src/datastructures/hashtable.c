@@ -1,10 +1,10 @@
 #include "hashtable.h"
 
 HashTable *ht_init(U32 datasize) {
-  // allocate hash table
+  /* allocate hash table */
   HashTable *ht = malloc(sizeof(HashTable));
 
-  // allocate the hash table with 100000 pointers
+  /* allocate the hash table with 100000 pointers */
   ht->entries = malloc(sizeof(Entry *) * TABLE_SIZE);
   ht->capacity = TABLE_SIZE;
   ht->size = 0;
@@ -20,7 +20,7 @@ HashTable *ht_init(U32 datasize) {
 U32 hash(const char *key) {
   U64 hash = 0ULL;
 
-  // sdbm hash function
+  /* sdbm hash function */
   int c;
   while ((c = *key++)) {
     hash = c + (hash << 6) + (hash << 16) - hash;
@@ -94,9 +94,10 @@ enum HashTableCodes ht_check(HashTable *ht, const char *key) {
 Entry *ht_getEntry(HashTable *ht, const char *key) {
   U32 hashed = hash(key);
 
-  // BUG! Sometimes the entry will be null but it won't break -> crashes on
-  // strcmp
-  // TODO: Fix the bug
+  /* BUG! Sometimes the entry will be null but it won't break -> crashes on
+  strcmp
+  TODO: Fix the BUG
+  */
   Entry *entry = ht->entries[hashed];
   if (!entry)
     return NULL;
@@ -107,7 +108,7 @@ Entry *ht_getEntry(HashTable *ht, const char *key) {
   return entry;
 }
 
-// Not 100% sure this works
+/* Not 100% sure this works */
 static void free_entries(Entry *entry) {
   if (entry->next) {
     free_entries(entry->next);
@@ -123,14 +124,17 @@ void ht_clear(HashTable *ht) {
     if (ht->entries[i] == NULL)
       continue;
 
-    // go through every part of the malloced memory to clean
+    /* go through every part of the malloced memory to clean */
     Entry *entry = ht->entries[i];
     free_entries(entry);
   }
   ht->size = 0;
 }
 
-// TODO: Implement delete safely so there are no hanging pointers on delete
+/* TODO: Implement delete safely so there are no hanging pointers on delete */
+/* Need to copy hanging entry into array if array entry is deleted and is
+pointing to collision entry
+*
 enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
   U32 hashed = hash(key);
   int found = 0;
@@ -154,7 +158,7 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
     return HASH_NOT_DELETED;
   }
 
-  // last entry in linked list
+  last entry in linked list
   Entry *next = entry->next;
   free(entry->key);
   free(entry->val);
@@ -167,6 +171,7 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
 
   return HT_STATUS_OK;
 }
+*/
 
 Vector *ht_getKeys(HashTable *ht) {
   /* A vector of pointers. Each pointer points to the key */
@@ -175,8 +180,10 @@ Vector *ht_getKeys(HashTable *ht) {
   for (int i = 0; i < TABLE_SIZE; i++) {
     if (ht->entries[i] == NULL)
       continue;
+
+    /* TODO: Test this to make sure its working properly */
     vector_add(vector, &ht->entries[i]->key);
-    Entry *next = &ht->entries[i]->next;
+    Entry *next = ht->entries[i]->next;
     while (next) {
       vector_add(vector, next->key);
       next = next->next;
