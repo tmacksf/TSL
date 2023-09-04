@@ -185,7 +185,7 @@ Vector *ht_getKeys(HashTable *ht) {
     vector_add(vector, &ht->entries[i]->key);
     Entry *next = ht->entries[i]->next;
     while (next) {
-      vector_add(vector, next->key);
+      vector_add(vector, &next->key);
       next = next->next;
     }
   }
