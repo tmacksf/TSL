@@ -57,6 +57,10 @@ enum HashTableCodes ht_add(HashTable *ht, const char *key, const void *val) {
   while (next) {
     if (strcmp(key, next->key) == 0) {
       printf("Hash already exists\n");
+      /* free allocated memory */
+      free(entry->key);
+      free(entry->val);
+      free(entry);
       return HASH_EXISTS;
     }
 
@@ -90,6 +94,9 @@ enum HashTableCodes ht_check(HashTable *ht, const char *key) {
 Entry *ht_getEntry(HashTable *ht, const char *key) {
   U32 hashed = hash(key);
 
+  // BUG! Sometimes the entry will be null but it won't break -> crashes on
+  // strcmp
+  // TODO: Fix the bug
   Entry *entry = ht->entries[hashed];
   if (!entry)
     return NULL;
