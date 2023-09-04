@@ -169,18 +169,20 @@ enum HashTableCodes ht_delete(HashTable *ht, const char *key) {
 }
 
 Vector *ht_getKeys(HashTable *ht) {
-  Vector *vector = vector_init(sizeof(char) * 64);
+  /* A vector of pointers. Each pointer points to the key */
+  Vector *vector = vector_init(sizeof(char *));
 
   for (int i = 0; i < TABLE_SIZE; i++) {
     if (ht->entries[i] == NULL)
       continue;
-    vector_add(vector, ht->entries[i]->key);
-    Entry *next = ht->entries[i]->next;
+    vector_add(vector, &ht->entries[i]->key);
+    Entry *next = &ht->entries[i]->next;
     while (next) {
       vector_add(vector, next->key);
       next = next->next;
     }
   }
 
+  /* The output of this will need to be broken down as a char** */
   return vector;
 }
