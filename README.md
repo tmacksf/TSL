@@ -1,17 +1,19 @@
 # TSL
 A C code base for future projects. Will continue to build on this whenever necessary. 
 
-### Implemented
-##### Memory
-1. Arena allocator
+### Data structures
+- Vector
+- Hash table (string as key)
+- Linked list
+- Doubly linked list 
 
-##### Data structures
-1. Vector 
-2. Linked list
-3. Doubly linked list
+### Sorting 
+- Quicksort
+- Bubble sort
 
-##### Sort
-1. Quicksort
-2. Bubble sort
+### Search
+- Binary Search
 
-##### String
+### Memory
+- Arena allocator
+
