@@ -13,6 +13,9 @@ void quicksort(void *data, U32 count, U32 dataSize,
 
   /* TODO: Some optimisation to make sure the pivot is less than the end of the
    * list and greater than the start? */
+
+  /* TODO: Remove the max data size thing in the future (don't want to malloc so
+   * this is the best thing right now) */
   if (dataSize > MAX_DATA_SIZE) {
     printf("Data size too large\n");
     return;
