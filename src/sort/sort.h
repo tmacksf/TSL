@@ -6,10 +6,8 @@
 
 #define MAX_DATA_SIZE 1000 /* Max data size */
 
-void swap(void *a, void *b, U32 size);
-
 void quicksort(void *data, U32 count, U32 dataSize,
-               int (*cmp)(const void *, const void *, void *), void *extra);
+               int (*cmp)(const void *, const void *));
 
 void rsort(); /* radixsort */
 

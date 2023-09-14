@@ -1,55 +1,80 @@
 #include "sort.h"
+#include <string.h>
+
+/*
+static void swap_byte(void *a, void *b, U32 count) {
+  char *x = (char *)a;
+  char *y = (char *)b;
+  while (count--) {
+    char t = *x;
+    *x = *y;
+    *y = t;
+    x += 1;
+    y += 1;
+  }
+}
+
+static void swap_word(void *a, void *b, U32 count) {
+  char *x = (char *)a;
+  char *y = (char *)b;
+  long t[1];
+
+  while (count--) {
+    memcpy(t, x, sizeof(long));
+    memcpy(x, y, sizeof(long));
+    memcpy(y, t, sizeof(long));
+    x += sizeof(long);
+    y += sizeof(long);
+  }
+}
 
 void swap(void *a, void *b, U32 size) {
-  char buffer[MAX_DATA_SIZE];
+  U32 words = size / sizeof(long);
+  U32 bytes = size % sizeof(long);
+  swap_word(a, b, words);
+  a = (char *)a + words * sizeof(long);
+  b = (char *)b + words * sizeof(long);
+  swap_byte(a, b, bytes);
+}
+*/
+
+static inline void swap(void *a, void *b, U32 size) {
+  char buffer[128] = {0};
 
   memcpy(buffer, a, size);
   memcpy(a, b, size);
   memcpy(b, buffer, size);
 }
 
+/* TODO: Some optimisation to make sure the pivot is less than the end of
+ * the list and greater than the start? */
+
 void quicksort(void *data, U32 count, U32 dataSize,
-               int (*cmp)(const void *, const void *, void *), void *extra) {
-
-  /* TODO: Some optimisation to make sure the pivot is less than the end of the
-   * list and greater than the start? */
-
-  /* TODO: Remove the max data size thing in the future (don't want to malloc so
-   * this is the best thing right now) */
-  if (dataSize > MAX_DATA_SIZE) {
-    printf("Data size too large\n");
-    return;
-  }
-
+               int (*cmp)(const void *, const void *)) {
   if (count < 2)
     return;
 
-  U32 pivot = count / 2;
-  U32 i = 1;
-  U32 j = count - 1;
-  /* Don't need to do this but its easier to understand */
-  swap(data, data + pivot * dataSize, dataSize);
+  U32 pivot = 0;
+  U32 lowerIndex = 1;
+  U32 upperIndex = count - 1;
 
-  pivot = 0;
-  for (int iter = 1; iter < count; iter++) {
-    while (cmp(data + i * dataSize, data, extra) <= 0 && i < dataSize) {
-      i++;
+  // while (1) {
+  for (int i = 0; i < count; i++) {
+    while (cmp(data + lowerIndex * dataSize, data) <= 0 && lowerIndex < count) {
+      lowerIndex++;
     }
-
-    while (cmp(data + j * dataSize, data, extra) >= 0 && j > 0) {
-      j--;
+    while (cmp(data + upperIndex * dataSize, data) >= 0 && upperIndex > 0) {
+      upperIndex--;
     }
-
-    if (i > j)
+    if (lowerIndex > upperIndex)
       break;
 
-    swap(data + i * dataSize, data + j * dataSize, dataSize);
+    swap(data + lowerIndex * dataSize, data + upperIndex * dataSize, dataSize);
   }
 
-  swap(data, data + j * dataSize, dataSize);
-  /* front partition */
-  quicksort(data, j, dataSize, cmp, extra);
-  quicksort(data + j * dataSize + dataSize, count - j, dataSize, cmp, extra);
+  swap(data, data + upperIndex * dataSize, dataSize);
+  quicksort(data, upperIndex, dataSize, cmp);
+  quicksort(data + lowerIndex * dataSize, count - lowerIndex, dataSize, cmp);
 }
 
 void bubblesort(void *data, U32 count, U32 dataSize,
