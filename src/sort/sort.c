@@ -1,7 +1,6 @@
 #include "sort.h"
 #include <string.h>
 
-/*
 static void swap_byte(void *a, void *b, U32 count) {
   char *x = (char *)a;
   char *y = (char *)b;
@@ -36,8 +35,8 @@ void swap(void *a, void *b, U32 size) {
   b = (char *)b + words * sizeof(long);
   swap_byte(a, b, bytes);
 }
-*/
 
+/*
 static inline void swap(void *a, void *b, U32 size) {
   char buffer[128] = {0};
 
@@ -45,6 +44,7 @@ static inline void swap(void *a, void *b, U32 size) {
   memcpy(a, b, size);
   memcpy(b, buffer, size);
 }
+*/
 
 /* TODO: Some optimisation to make sure the pivot is less than the end of
  * the list and greater than the start? */
@@ -58,7 +58,6 @@ void quicksort(void *data, U32 count, U32 dataSize,
   U32 lowerIndex = 1;
   U32 upperIndex = count - 1;
 
-  // while (1) {
   for (int i = 0; i < count; i++) {
     while (cmp(data + lowerIndex * dataSize, data) <= 0 && lowerIndex < count) {
       lowerIndex++;
