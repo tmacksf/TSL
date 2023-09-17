@@ -1,7 +1,7 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include "../base/base.h"
+#include "../base.h"
 #include <ctype.h>
 
 #define NULLCHAR '\0'
