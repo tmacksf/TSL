@@ -1,7 +1,7 @@
 #ifndef ARENA_H
 #define ARENA_H
 
-#include "../base/base.h"
+#include "../base.h"
 
 // TODO: Make this actually do stuff
 

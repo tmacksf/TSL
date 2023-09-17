@@ -1,7 +1,7 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-#include "../base/base.h"
+#include "../base.h"
 #include "vector.h"
 #include <string.h>
 

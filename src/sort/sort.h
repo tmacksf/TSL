@@ -1,7 +1,7 @@
 #ifndef SORTING_H
 #define SORTING_H
 
-#include "../base/base.h"
+#include "../base.h"
 #include <string.h>
 
 #define MAX_DATA_SIZE 1000 /* Max data size */
