@@ -11,7 +11,7 @@ typedef struct Arena {
   U64 capacity;
 } Arena;
 
-#define arena_reset(a) (a)->size = 0;
+Arena *arena_init(U32 size);
 
 void *arena_alloc(Arena *a, U64 size);
 
