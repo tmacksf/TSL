@@ -11,8 +11,10 @@ typedef struct Arena {
   U64 capacity;
 } Arena;
 
-Arena *arena_init(U32 size);
+/* creates an arena of given capacity in bytes */
+Arena *arena_init(U32 capacity);
 
+/* creates a buffer inside of the arena of given size */
 void *arena_alloc(Arena *a, U64 size);
 
 #endif
