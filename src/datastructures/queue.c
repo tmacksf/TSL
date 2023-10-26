@@ -13,12 +13,13 @@ int queue_push(Queue *q, const void *data) {
   QueueNode *qn = malloc(sizeof(QueueNode));
   qn->next = NULL;
   qn->data = d;
-  memcpy(d, data, q->datasize);
-  if (!q->front) {
+  memcpy(qn->data, data, q->datasize);
+  if (!q->size) {
     q->front = qn;
     q->back = qn;
   } else {
     q->back->next = qn;
+    q->back = qn;
   }
   q->size++;
 
@@ -26,14 +27,18 @@ int queue_push(Queue *q, const void *data) {
 }
 
 int queue_pop(Queue *q) {
-  if (!q->front) {
+  if (!q->front)
     return 1;
-  }
+
   free(q->front->data);
   QueueNode *qn = q->front;
   q->front = qn->next;
   free(qn);
   q->size--;
+  if (q->size == 0) {
+    q->back = NULL;
+    q->front = NULL;
+  }
   return 0;
 }
 
