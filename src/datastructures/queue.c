@@ -10,8 +10,15 @@ Queue *queue_init(U32 datasize) {
 
 int queue_push(Queue *q, const void *data) {
   QueueNode *qn = malloc(sizeof(QueueNode));
+  if (qn == NULL) {
+    return -1;
+  }
+
   qn->next = NULL;
-  qn->data = malloc(sizeof(q->datasize));
+  qn->data = malloc(q->datasize);
+  if (qn->data == NULL) {
+    return -1;
+  }
   memcpy(qn->data, data, q->datasize);
   if (!q->size) {
     q->front = qn;
