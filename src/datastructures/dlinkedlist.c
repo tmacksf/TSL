@@ -23,7 +23,10 @@ DLLNode *dlist_createnode(void *data, int datasize) {
 DLLNode *dlist_prepend(DLinkedList *dll, void *data) {
   DLLNode *node = dlist_createnode(data, dll->datasize);
 
+  DLLNode *temp = dll->head;
+  // TODO: Test
   dll->head = node;
+  dll->head->next = temp;
 
   if (!dll->size)
     dll->tail = node;
@@ -36,10 +39,12 @@ DLLNode *dlist_prepend(DLinkedList *dll, void *data) {
 DLLNode *dlist_append(DLinkedList *dll, void *data) {
   DLLNode *node = dlist_createnode(data, dll->datasize);
 
-  dll->tail = node;
-
   if (!dll->size)
     dll->head = node;
+  else {
+    dll->tail->next = node;
+  }
+  dll->tail = node;
 
   dll->size++;
 
