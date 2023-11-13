@@ -18,8 +18,6 @@ typedef struct DLLNode {
   void *data;
 } DLLNode;
 
-#define DEBUG 1
-
 /* DLinkedList functions */
 DLinkedList *dlist_init(int datasize);
 /* Creates a node (not to be used on its own) */
