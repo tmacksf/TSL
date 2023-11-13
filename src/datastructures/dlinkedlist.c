@@ -38,10 +38,13 @@ DLLNode *dlist_prepend(DLinkedList *dll, void *data) {
 
 DLLNode *dlist_append(DLinkedList *dll, void *data) {
   DLLNode *node = dlist_createnode(data, dll->datasize);
+  node->next = NULL;
 
-  if (!dll->size)
+  if (!dll->size) {
     dll->head = node;
-  else {
+    node->previous = NULL;
+  } else {
+    node->previous = dll->tail;
     dll->tail->next = node;
   }
   dll->tail = node;
@@ -71,18 +74,18 @@ int dlist_removeNode(DLinkedList *dll, DLLNode *node) {
   // TODO: Decide if I want to check if node is in the list
 #ifdef DEBUG
   int found = 0;
-  DLLNode *looking = head;
+  DLLNode *looking = dll->head;
   for (int i = 0; i < dll->size; i++) {
     if (looking == node)
       found = 1;
+    looking = looking->next;
   }
 
   if (!found) {
-    prinft("Not found");
+    printf("Not found");
     return -1;
   }
 #endif
-  free(node->data);
 
   // if the node is the head and there is a next node
   if (node == dll->head && node->next) {
@@ -105,6 +108,7 @@ int dlist_removeNode(DLinkedList *dll, DLLNode *node) {
     node->next->previous = node->previous;
   }
   dll->size--;
+  free(node->data);
   free(node);
 
   return 0;
