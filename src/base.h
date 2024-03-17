@@ -3,11 +3,14 @@
 #ifndef BASE_H
 #define BASE_H
 
-#include <_types/_uint8_t.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#if __APPLE__
+#include <_types/_uint8_t.h>
 #include <sys/_types/_int64_t.h>
 #include <sys/_types/_int8_t.h>
+#endif
 
 #if defined(__clang__)
 #define COMPILER_CLANG 1
