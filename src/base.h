@@ -29,52 +29,47 @@
 ////////////////////////////////
 /* Types */
 #include <stdint.h>
-typedef int8_t I8;
-typedef int16_t I16;
-typedef int32_t I32;
-typedef int64_t I64;
-typedef uint8_t U8;
-typedef uint16_t U16;
-typedef uint32_t U32;
-typedef uint64_t U64;
-typedef float F32;
-typedef double F64;
+typedef int8_t i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+typedef float f32;
+typedef double f64;
 
 ////////////////////////////////
 /* Compound Types */
 /* TODO: Don't know what to do here but like vectors */
 
 typedef struct Vec2_I32 {
-  I32 x;
-  I32 y;
+  i32 x;
+  i32 y;
 } Vec2_I32;
 
 typedef struct Vec2 {
-  F32 x;
-  F32 y;
+  f32 x;
+  f32 y;
 } Vec2;
 
 typedef struct Vec2_F64 {
-  F64 x;
-  F64 y;
+  f64 x;
+  f64 y;
 } Vec2_F64;
 
 typedef struct Vec3 {
-  F32 x;
-  F32 y;
-  F32 z;
+  f32 x;
+  f32 y;
+  f32 z;
 } Vec3;
 
 ////////////////////////////////
 /* Constants */
 /* TODO: Come back to this (don't know what to add here now) */
 
-#define MaxI8 255
-#define MaxI16 65535
-#define MaxI32 0xFFFFFFFF
-#define MaxI64 0xFFFFFFFFFFFFFFFF
-
-#define MaxU8 256
+#include <limits.h>
 
 ////////////////////////////////
 /* Symbolic Constants */
