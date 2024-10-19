@@ -1,7 +1,7 @@
 #include "queue.h"
 #include <string.h>
 
-Queue *queue_init(U32 datasize) {
+Queue *queue_init(u32 datasize) {
   Queue *q = malloc(sizeof(Queue));
   q->datasize = datasize;
   q->size = 0;
@@ -52,4 +52,4 @@ void *queue_top(Queue *q) { return q->front->data; }
 
 QueueNode *queue_topNode(Queue *q) { return q->front; }
 
-const U32 queue_size(Queue *q) { return q->size; }
+const u32 queue_size(Queue *q) { return q->size; }

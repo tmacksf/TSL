@@ -25,7 +25,7 @@ int vector_add(Vector *self, void *data);
 /* removes an element from a Vector */
 int vector_remove(Vector *self, int index);
 /* gets the data at an index */
-void *vector_at(Vector *self, U32 index);
+void *vector_at(Vector *self, u32 index);
 /* performs a function on every element of the Vector */
 void vector_foreach(Vector *self, void *(*func)(void *, void *), void *b);
 /* Delets a vector */

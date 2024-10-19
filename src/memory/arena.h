@@ -7,14 +7,14 @@
 
 typedef struct Arena {
   char *data;
-  U64 size;
-  U64 capacity;
+  u64 size;
+  u64 capacity;
 } Arena;
 
 /* creates an arena of given capacity in bytes */
-Arena *arena_init(U32 capacity);
+Arena *arena_init(u32 capacity);
 
 /* creates a buffer inside of the arena of given size */
-void *arena_alloc(Arena *a, U64 size);
+void *arena_alloc(Arena *a, u64 size);
 
 #endif

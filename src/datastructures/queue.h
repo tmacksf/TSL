@@ -11,11 +11,11 @@ typedef struct QueueNode {
 typedef struct Queue {
   QueueNode *front;
   QueueNode *back;
-  U32 size;
-  U32 datasize;
+  u32 size;
+  u32 datasize;
 } Queue;
 
-Queue *queue_init(U32 datasize);
+Queue *queue_init(u32 datasize);
 
 int queue_push(Queue *q, const void *data);
 
@@ -25,6 +25,6 @@ void *queue_top(Queue *q);
 
 QueueNode *queue_topNode(Queue *q);
 
-const U32 queue_size(Queue *q);
+const u32 queue_size(Queue *q);
 
 #endif

@@ -1,10 +1,10 @@
 #include "search.h"
 
-int binarySearch(const void *key, const void *arr, U32 length, U32 dataSize,
+int binarySearch(const void *key, const void *arr, u32 length, u32 dataSize,
                  int (*cmp)(const void *, const void *)) {
-  U32 lower = 0;
-  U32 upper = length;
-  U32 index = length / 2;
+  u32 lower = 0;
+  u32 upper = length;
+  u32 index = length / 2;
 
   /* TODO: Make sure is right */
   int iterations = length / 2;

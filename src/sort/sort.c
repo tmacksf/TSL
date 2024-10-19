@@ -1,7 +1,7 @@
 #include "sort.h"
 #include <string.h>
 
-static void swap_byte(void *a, void *b, U32 count) {
+static void swap_byte(void *a, void *b, u32 count) {
   char *x = (char *)a;
   char *y = (char *)b;
   while (count--) {
@@ -13,7 +13,7 @@ static void swap_byte(void *a, void *b, U32 count) {
   }
 }
 
-static void swap_word(void *a, void *b, U32 count) {
+static void swap_word(void *a, void *b, u32 count) {
   char *x = (char *)a;
   char *y = (char *)b;
   long t[1];
@@ -27,9 +27,9 @@ static void swap_word(void *a, void *b, U32 count) {
   }
 }
 
-void swap(void *a, void *b, U32 size) {
-  U32 words = size / sizeof(long);
-  U32 bytes = size % sizeof(long);
+void swap(void *a, void *b, u32 size) {
+  u32 words = size / sizeof(long);
+  u32 bytes = size % sizeof(long);
   swap_word(a, b, words);
   a = (char *)a + words * sizeof(long);
   b = (char *)b + words * sizeof(long);
@@ -49,14 +49,14 @@ static inline void swap(void *a, void *b, U32 size) {
 /* TODO: Some optimisation to make sure the pivot is less than the end of
  * the list and greater than the start? */
 
-void quicksort(void *data, U32 count, U32 dataSize,
+void quicksort(void *data, u32 count, u32 dataSize,
                int (*cmp)(const void *, const void *)) {
   if (count < 2)
     return;
 
-  U32 pivot = 0;
-  U32 lowerIndex = 1;
-  U32 upperIndex = count - 1;
+  u32 pivot = 0;
+  u32 lowerIndex = 1;
+  u32 upperIndex = count - 1;
 
   for (int i = 0; i < count; i++) {
     while (cmp(data + lowerIndex * dataSize, data) <= 0 && lowerIndex < count) {
@@ -76,7 +76,7 @@ void quicksort(void *data, U32 count, U32 dataSize,
   quicksort(data + lowerIndex * dataSize, count - lowerIndex, dataSize, cmp);
 }
 
-void bubblesort(void *data, U32 count, U32 dataSize,
+void bubblesort(void *data, u32 count, u32 dataSize,
                 int (*cmp)(const void *, const void *, void *), void *extra) {
 
   /* pass over the array */

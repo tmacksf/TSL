@@ -18,9 +18,9 @@ typedef struct Entry {
 
 typedef struct HashTable {
   Entry **entries; /* array of pointers to enteies */
-  U32 datasize;
-  U32 size;
-  U32 capacity;
+  u32 datasize;
+  u32 size;
+  u32 capacity;
 } HashTable;
 
 enum HashTableCodes {
@@ -34,10 +34,10 @@ enum HashTableCodes {
  * Params: datasize
  * Returns: Hash table pointer
  */
-HashTable *ht_init(U32 datasize);
+HashTable *ht_init(u32 datasize);
 
 /* hash function */
-U32 hash(const char *key);
+u32 hash(const char *key);
 
 /* Creates an individual entry
  * Params: hash table, key, value

@@ -15,5 +15,6 @@ libTSL.a: libTSL.o
 debug: libTSL.a main.c 
 	$(CC) $(CFLAGS) -o main main.c libTSL.a 
 
+.PHONY : clean
 clean: 
-	rm *.o *.so 
+	rm -f *.o *.so 

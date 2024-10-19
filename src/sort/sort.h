@@ -6,12 +6,12 @@
 
 #define MAX_DATA_SIZE 1000 /* Max data size */
 
-void quicksort(void *data, U32 count, U32 dataSize,
+void quicksort(void *data, u32 count, u32 dataSize,
                int (*cmp)(const void *, const void *));
 
 void rsort(); /* radixsort */
 
-void bubblesort(void *data, U32 count, U32 dataSize,
+void bubblesort(void *data, u32 count, u32 dataSize,
                 int (*cmp)(const void *, const void *, void *), void *extra);
 
 void msort(); /* mergesort */

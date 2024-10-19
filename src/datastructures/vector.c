@@ -23,7 +23,7 @@ int vector_add(Vector *self, void *data) {
   return 0;
 }
 
-void *vector_at(Vector *self, U32 index) {
+void *vector_at(Vector *self, u32 index) {
   return self->data + index * self->datasize;
 }
 

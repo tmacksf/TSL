@@ -1,6 +1,6 @@
 #include "hashtable.h"
 
-HashTable *ht_init(U32 datasize) {
+HashTable *ht_init(u32 datasize) {
   /* allocate hash table */
   HashTable *ht = malloc(sizeof(HashTable));
 
@@ -17,8 +17,8 @@ HashTable *ht_init(U32 datasize) {
   return ht;
 }
 
-U32 hash(const char *key) {
-  U64 hash = 0ULL;
+u32 hash(const char *key) {
+  u64 hash = 0ULL;
 
   /* sdbm hash function */
   int c;
@@ -43,7 +43,7 @@ Entry *ht_individualEntry(HashTable *ht, const char *key, const void *val) {
 }
 
 enum HashTableCodes ht_add(HashTable *ht, const char *key, const void *val) {
-  U32 hashed = hash(key);
+  u32 hashed = hash(key);
 
   if (ht->entries[hashed] == NULL) {
     ht->entries[hashed] = ht_individualEntry(ht, key, val);
@@ -75,7 +75,7 @@ enum HashTableCodes ht_add(HashTable *ht, const char *key, const void *val) {
 }
 
 enum HashTableCodes ht_check(HashTable *ht, const char *key) {
-  U32 hashed = hash(key);
+  u32 hashed = hash(key);
 
   Entry *entry = ht->entries[hashed];
 
@@ -92,7 +92,7 @@ enum HashTableCodes ht_check(HashTable *ht, const char *key) {
 }
 
 Entry *ht_getEntry(HashTable *ht, const char *key) {
-  U32 hashed = hash(key);
+  u32 hashed = hash(key);
 
   /* BUG! Sometimes the entry will be null but it won't break -> crashes on
   strcmp
